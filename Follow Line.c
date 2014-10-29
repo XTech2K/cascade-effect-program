@@ -20,7 +20,7 @@ task main()
 while (SensorValue(touchSensor)==0)//Stuck on how to tell this to stop in autonomous- touch or ultrasonic would probably be best bet//
 	//That or just wait for the teleop//
 {
-	if (SensorValue(lightSensor) > 40)
+	if (SensorValue(lightSensor) > 40) //Will need to calculate own threshold//
 	{
 		motor [frontright]=80;
 		motor [backright]=80;
