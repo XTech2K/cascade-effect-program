@@ -13,9 +13,13 @@
 
 task main()
 {
-while(true)
-if (nNxtButtonPressed == 2){
-nxtDisplayCenteredBigTextLine(4, "infraRed");
-wait1Msec (2000);
-}
+eraseDisplay();
+while(true){
+	int value;
+	if(nNxtButtonPressed==3){
+		value = SensorValue[infraRed];
+		nxtDisplayCenteredBigTextLine(4,"%d" , value);
+		wait1Msec(5000) ;
+		}
+	}
 }
