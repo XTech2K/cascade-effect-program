@@ -1,0 +1,79 @@
+//essentials.c
+//Include this in revelent programs
+// Use #include "essentials.c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////THIS PROGRAM USES time1[T2] SO DONT USE IT IN OTHER PLACES////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+
+Contains:
+
+drive: a funtcion that would be called on the joystick.joy1_y1 and returns either a deadzone or a
+				cubic function for accurate driving: motor[name] = drive(joystick.joy1_y1);
+
+blinker: a task that will toggle color sensor "StatusLight" between 2 colors: defined by strings color1 and color2,
+					color options are "red","blue","green",and "all": setting the string to anything else will turn off the sensor
+					during that period.
+
+*/
+
+string color1 = "red";
+string color2 = "none";
+
+float cubeDZ(float input){
+	if(abs(input) <= 15){
+		return 0;
+	}else{
+		if(input <= 0){
+			input = (input / 127) * 128;
+		}
+		return (pow((input /128) , 3) * 127);
+	}
+}
+
+
+task blinker(){
+	time1[T2] = 0;
+	while(true){
+		switch(color1){
+			case "red":
+				SensorType[StatusLight] = sensorCOLORRED;
+				break;
+			case "green":
+				SensorType[StatusLight] = sensorCOLORGREEN;
+				break;
+			case "blue":
+				SensorType[StatusLight] = sensorCOLORBLUE;
+				break;
+			case "all":
+				SensorType[StatusLight] = sensorCOLORFULL;
+				break;
+			default:
+				SensorType[StatusLight] = sensorCOLORNONE;
+				break;
+		}
+		while (time1[T2] % 1000 <= 500){
+			wait1Msec(1);
+		}
+		switch(color2){
+			case "red":
+				SensorType[StatusLight] = sensorCOLORRED;
+				break;
+			case "green":
+				SensorType[StatusLight] = sensorCOLORGREEN;
+				break;
+			case "blue":
+				SensorType[StatusLight] = sensorCOLORBLUE;
+				break;
+			case "all":
+				SensorType[StatusLight] = sensorCOLORFULL;
+				break;
+			default:
+				SensorType[StatusLight] = sensorCOLORNONE;
+				break;
+		}
+		while (time1[T2] % 1000 > 500){
+			wait1Msec(1);
+		}
+	}
+}
